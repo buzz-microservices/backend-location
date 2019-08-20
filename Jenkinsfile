@@ -32,11 +32,11 @@ pipeline {
               container('maven') {
                 checkout scm
                 sh 'mvn test'
+              }
              script{
                    def commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
                 }
-                echo "pipeline GIT_COMMIT is  -- ${commitHash}" 
-              }
+                echo "pipeline GIT_COMMIT is  -- ${commitHash}"
             }
             post {
                 always {
@@ -57,7 +57,7 @@ pipeline {
                 unstash 'Dockerfile'
                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             	sh """#!/busybox/sh
-            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${env.GIT_COMMIT} -d gcr.io/na-csa-msuarez/backend-location:latest
+            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${commitHash} -d gcr.io/na-csa-msuarez/backend-location:latest
                 """
                    }
               }
