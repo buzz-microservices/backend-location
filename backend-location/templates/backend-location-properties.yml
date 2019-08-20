@@ -1,0 +1,19 @@
+apiVersion: v1
+data:
+  application.properties: |
+    server.port=8081
+    ipstack.url=http://api.ipstack.com/
+    google.api.timezone.url=https://maps.googleapis.com/maps/api/timezone/json
+    ipstack.access_key=68126c64ef5b1d746282139f87670f28
+    google.api.timezone.key=AIzaSyDAFIDCTla4rrab06-bbhqSFreRJMovGDk
+    test.ip=75.18.113.217
+    test.lat=25.7703
+    test.long=-80.2072
+    test.city=Miami
+    test.country=United States
+    test.timezoneid=America/New_York
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: backend-location-properties
+  selfLink: /api/v1/namespaces/cje/configmaps/backend-location-properties

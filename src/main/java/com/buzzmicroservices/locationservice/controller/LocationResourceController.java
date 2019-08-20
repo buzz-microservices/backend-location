@@ -90,6 +90,7 @@ public class LocationResourceController{
 
 
     public GeoLocation getLatLong(HttpServletRequest request) {
+        logger.info(request.getHeader("X-FORWARDED-FOR"));
         GeoLocation result = geoWebClient
         .post()
         .uri(uriBuilder ->uriBuilder
