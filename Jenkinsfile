@@ -42,18 +42,18 @@ pipeline {
         stage('Build Docker Image') {
          agent {
             kubernetes {
-                label 'maven'
+                label 'kaniko'
                 yamlFile 'pod-templates/kaniko-pod.yaml'
                 }
             }
             steps {
               container(name: 'kaniko', shell: '/busybox/sh') {
                 unstash 'location'
-//                withEnv(['PATH+EXTRA=/busybox']) {
-//            	sh '''#!/busybox/sh
-//            	/kaniko/executor --context `pwd` --destination gcr.io/na-csa-msuarez/backend-location:latest
-//            	'''
-//                   }
+                withEnv(['PATH+EXTRA=/busybox']) {
+            	sh '''#!/busybox/sh
+            	/kaniko/executor --context `pwd` --destination gcr.io/na-csa-msuarez/backend-location:latest
+            	'''
+                   }
               }
             }
         }
