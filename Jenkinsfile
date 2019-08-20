@@ -31,11 +31,11 @@ pipeline {
             steps {
               container('maven') {
                 checkout scm
+                sh 'mvn test'
              script{
                    def commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
-                }	
-        	echo "pipeline GIT_COMMIT is  -- ${commitHash}"
-                sh 'mvn test' 
+                }
+                echo "pipeline GIT_COMMIT is  -- ${commitHash}" 
               }
             }
             post {
