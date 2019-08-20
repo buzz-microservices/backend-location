@@ -51,8 +51,8 @@ pipeline {
                 unstash 'location'
                 withEnv(['PATH+EXTRA=/busybox']) {
             	sh '''#!/busybox/sh
-            	/kaniko/executor --context `pwd` --destination gcr.io/na-csa-msuarez/backend-location:latest
-            	'''
+            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:0.0.1 -d gcr.io/na-csa-msuarez/backend-location:latest
+                '''
                    }
               }
             }
