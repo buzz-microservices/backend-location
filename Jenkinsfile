@@ -28,6 +28,7 @@ pipeline {
             }
             steps {
               container('maven') {
+                checkout scm
                 sh 'mvn test' 
               }
             }
