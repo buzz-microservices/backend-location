@@ -59,5 +59,19 @@ pipeline {
               }
             }
         }
+        stage('Helm install') {
+         agent {
+            kubernetes {
+                label 'helm-kubectl'
+                yamlFile 'pod-templates/helm-kubectl-pod.yaml'
+                }
+            }
+            steps {
+              container('helm-kubectl') {
+		sh 'helm -h'
+                   }
+              }
+            }
+        }
     }
 }
