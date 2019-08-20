@@ -35,9 +35,7 @@ pipeline {
               }
              script{
                    commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
-                   echo "CH: ${commitHash}"
                 }
-                echo "pipeline GIT_COMMIT is  -- ${commitHash}"
             }
             post {
                 always {
@@ -72,8 +70,11 @@ pipeline {
                 }
             }
             steps {
+                checkout scm
               container('helm-kubectl') {
-		sh 'helm -h'
+		sh "helm package --app-version ${commitHash} backend-location --debug"
+		sh "curl -L --data-binary "@backend-location-${commitHash}.tgz" http://34.67.152.26:8080/api/charts"
+		sh "helm upgrade --name backend-location chartmuseum/backend-location -i --set image.tag=${commitHash}"
                    }
               }
             }
