@@ -1,34 +1,17 @@
 pipeline {
-    agent {
-    kubernetes {
-      defaultContainer 'jnlp'
-      yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
-spec:
-  containers:
-  - name: maven
-    image: maven:alpine
-    command:
-    - cat
-    tty: true
-  - name: busybox
-    image: busybox
-    command:
-    - cat
-    tty: true
-"""
-    }
-  }
+  agent none
   options { 
     buildDiscarder(logRotator(numToKeepStr: '2'))
     skipDefaultCheckout true
   }
   stages {
         stage('Build') {
+	 agent {
+            kubernetes {
+                label 'maven'
+                yamlFile 'pod-templates/maven-pod.yaml'
+                }
+            }	
             steps {
               container('maven') {
                 checkout scm
@@ -37,6 +20,12 @@ spec:
 	    }
         }
         stage('Test') { 
+         agent {
+            kubernetes {
+                label 'maven'
+                yamlFile 'pod-templates/maven-pod.yaml'
+                }
+            }
             steps {
               container('maven') {
                 sh 'mvn test' 
