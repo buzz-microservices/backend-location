@@ -15,7 +15,7 @@ pipeline {
             steps {
               container('maven') {
                 checkout scm
-		sleep 60
+		sleep 300
                 sh 'mvn -B -DskipTests clean package'
               }
 	    }
