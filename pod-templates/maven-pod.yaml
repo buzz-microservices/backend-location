@@ -10,11 +10,6 @@ spec:
     command:
     - cat
     tty: true
-  - name: busybox
-    image: busybox
-    command:
-    - cat
-    tty: true
     volumeMounts:
       - name: maven-repo
         mountPath: "/root/.m2/repository"
