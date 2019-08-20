@@ -7,9 +7,6 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     imagePullPolicy: Always
-    args: ["--dockerfile=<path to Dockerfile within the build context>",
-            "--context=gs://<GCS bucket>/<path to .tar.gz>",
-            "--destination=<gcr.io/$PROJECT/$IMAGE:$TAG>"]
     volumeMounts:
       - name: kaniko-secret
         mountPath: /secret
