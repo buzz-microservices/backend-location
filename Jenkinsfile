@@ -34,9 +34,10 @@ pipeline {
                 sh 'mvn test'
               }
              script{
-                   def commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
+                   commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
+                   echo "CH: ${commitHash}"
                 }
-                echo "pipeline GIT_COMMIT is  -- ${env.commitHash}"
+                echo "pipeline GIT_COMMIT is  -- ${commitHash}"
             }
             post {
                 always {
