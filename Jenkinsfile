@@ -36,7 +36,7 @@ pipeline {
 
                  }
 //                checkout scm
-		echo "pipeline GIT_COMMIT is ${env.commitHash}"
+		echo "pipeline GIT_COMMIT is  -- ${env.commitHash}"
                 sh 'mvn test' 
               }
             }
