@@ -1,9 +1,5 @@
 pipeline {
   agent none
-  environment{
-      scmVars = checkout scm
-      GIT_COMMIT = scmVars.GIT_COMMIT
-  }  
   options { 
     buildDiscarder(logRotator(numToKeepStr: '2'))
     skipDefaultCheckout true
