@@ -51,9 +51,11 @@ pipeline {
               container(name: 'kaniko', shell: '/busybox/sh') {
                 unstash 'location'
                 unstash 'Dockerfile'
+                env.SHORT_COMMIT = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
+                sh "echo ${SHORT_COMMIT}"
                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             	sh """#!/busybox/sh
-            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${env.GIT_COMMIT} -d gcr.io/na-csa-msuarez/backend-location:latest
+            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${GIT_COMMIT} -d gcr.io/na-csa-msuarez/backend-location:latest
                 """
                    }
               }
