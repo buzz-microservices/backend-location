@@ -31,12 +31,10 @@ pipeline {
             steps {
               container('maven') {
                 script{
-                def scmVars = checkout scm
-                def commitHash = scmVars.GIT_COMMIT
-
+	           def commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
                  }
-//                checkout scm
-		echo "pipeline GIT_COMMIT is  -- ${env.commitHash}"
+                checkout scm
+		echo "pipeline GIT_COMMIT is  -- ${commitHash}"
                 sh 'mvn test' 
               }
             }
