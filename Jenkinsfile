@@ -1,5 +1,9 @@
 pipeline {
   agent none
+  environment{
+      scmVars = checkout scm
+      GIT_COMMIT = scmVars.GIT_COMMIT
+  }  
   options { 
     buildDiscarder(logRotator(numToKeepStr: '2'))
     skipDefaultCheckout true
@@ -53,7 +57,7 @@ pipeline {
                 unstash 'Dockerfile'
                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             	sh """#!/busybox/sh
-            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${GIT_COMMIT} -d gcr.io/na-csa-msuarez/backend-location:latest
+            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${GIT_COMMIT:0:6} -d gcr.io/na-csa-msuarez/backend-location:latest
                 """
                    }
               }
