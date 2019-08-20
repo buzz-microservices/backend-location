@@ -72,8 +72,8 @@ pipeline {
             steps {
                 checkout scm
               container('helm-kubectl') {
-		sh "helm package --app-version ${commitHash} backend-location --debug"
-		sh """curl -L --data-binary "@backend-location-${commitHash}.tgz" http://34.67.152.26:8080/api/charts"""
+		sh "helm package --version 0.0.1 --app-version ${commitHash} backend-location --debug"
+		sh """curl -L --data-binary "@backend-location-0.0.1.tgz" http://34.67.152.26:8080/api/charts"""
 		sh "helm upgrade --name backend-location chartmuseum/backend-location -i --set image.tag=${commitHash}"
                    }
               }
