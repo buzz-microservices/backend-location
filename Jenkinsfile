@@ -76,7 +76,7 @@ pipeline {
                 sh "ls"
                 sh "helm package --version 0.0.1 --app-version ${commitHash} backend-location --debug --save=false"
 		sh """curl -L --data-binary "@backend-location-0.0.1.tgz" http://34.67.152.26:8080/api/charts"""
-		sh "helm upgrade backend-location chartmuseum/backend-location -i -n cje --set image.tag=${commitHash}"
+		sh "helm upgrade backend-location chartmuseum/backend-location -i --namespace cje --set image.tag=${commitHash}"
                    }
               }
             }
