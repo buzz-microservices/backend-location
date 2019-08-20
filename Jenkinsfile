@@ -16,6 +16,7 @@ pipeline {
               container('maven') {
                 checkout scm
                 sh 'mvn -B -DskipTests clean package'
+                stash includes: 'target/*.jar', name: 'location'
               }
 	    }
         }
@@ -30,7 +31,6 @@ pipeline {
               container('maven') {
                 checkout scm
                 sh 'mvn test' 
-                stash includes: 'target/*.jar', name: 'location'
               }
             }
             post {
