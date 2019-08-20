@@ -18,6 +18,10 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
                 stash includes: 'target/*.jar', name: 'location'
 		stash includes: 'Dockerfile', name: 'Dockerfile'
+		script{
+		version = sh(returnStdout: true, script: "mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout")
+ 		}
+		echo "version: ${version}"
               }
 	    }
         }
@@ -35,7 +39,7 @@ pipeline {
               }
              script{
                    commitHash = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7 | tr -d '\n'")
-                }
+                 }
             }
             post {
                 always {
