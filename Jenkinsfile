@@ -17,7 +17,7 @@ pipeline {
                 checkout scm
                 sh 'mvn -B -DskipTests clean package'
                 stash includes: 'target/*.jar', name: 'location'
-		stash includes: Dockerfile, name: 'Dockerfile'
+		stash includes: 'Dockerfile', name: 'Dockerfile'
               }
 	    }
         }
