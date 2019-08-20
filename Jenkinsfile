@@ -30,8 +30,13 @@ pipeline {
             }
             steps {
               container('maven') {
-                checkout scm
-		echo "pipeline GIT_COMMIT is ${env.GIT_COMMIT}"
+                script{
+                def scmVars = checkout scm
+                def commitHash = scmVars.GIT_COMMIT
+
+                 }
+//                checkout scm
+		echo "pipeline GIT_COMMIT is ${env.commitHash}"
                 sh 'mvn test' 
               }
             }
