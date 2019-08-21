@@ -60,7 +60,7 @@ pipeline {
                 unstash 'Dockerfile'
                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             	sh """#!/busybox/sh
-            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${BUILD_NUMBER} -d gcr.io/na-csa-msuarez/backend-location:${commitHash} -d gcr.io/na-csa-msuarez/backend-location:latest
+            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${BUILD_NUMBER} -d gcr.io/na-csa-msuarez/backend-location:${version}-${commitHash} -d gcr.io/na-csa-msuarez/backend-location:latest
                 """
                    }
               }
