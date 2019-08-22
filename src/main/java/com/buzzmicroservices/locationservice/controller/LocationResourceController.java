@@ -77,7 +77,7 @@ public class LocationResourceController{
         GeoLocation resultTimeZone = new GeoLocation();
         logger.info(result.getLatitude() + "-" + result.getLongitude() +"-" +Instant.now().getEpochSecond() +"-" + googleAPIAccessKey);
         if((result.getLatitude() == null|| result.getLongitude() == null)){
-            result = new GeoLocation(testIp, testCity, testCountry, testLat, testLong, testTimezoneId);
+            result = new GeoLocation(testIp, testCity, testCountry, testLat, testLong, testTimezoneId, "US");
         }
         else{
              resultTimeZone = getTime(result);
