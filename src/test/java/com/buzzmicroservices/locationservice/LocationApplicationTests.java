@@ -33,8 +33,8 @@ final LocationResourceController locationResource = Mockito.spy(new LocationReso
 
    @Before
    public void setUp() throws Exception{
-	mockGeo = new GeoLocation("127.0.0.1","HOME","HOME","LAT","LONG",null);
-	mockGeoAndTZ = new GeoLocation("","","","","","TZ");
+	mockGeo = new GeoLocation("127.0.0.1","HOME","HOME","LAT","LONG",null,"US");
+	mockGeoAndTZ = new GeoLocation("","","","","","TZ","US");
 	mockMvc = MockMvcBuilders.standaloneSetup(locationResource).build();
 	Mockito.doReturn(mockGeo).when(locationResource).getLatLong(Mockito.any(HttpServletRequest.class));
 	Mockito.doReturn(mockGeoAndTZ).when(locationResource).getTime(mockGeo);
