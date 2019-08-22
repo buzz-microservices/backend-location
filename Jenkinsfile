@@ -5,13 +5,14 @@ pipeline {
     skipDefaultCheckout true
   }
   stages {
-        stages('Acquiring pod') {
+        stage('Acquiring pod') {
 	        agent {
             kubernetes {
                 label 'maven'
                 yamlFile 'pod-templates/maven-pod.yaml'
                 }
             }	
+            stages{
             stage('Maven build'){
             steps {
               container('maven') {
@@ -43,6 +44,7 @@ pipeline {
                 }
             }
         }
+            }
         }
   
         stage('Build Docker Image') {
