@@ -19,7 +19,6 @@ pipeline {
                 checkout scm
                 sh 'mvn -B -DskipTests clean package'
                 stash includes: 'target/*.jar', name: 'location'
-		            stash includes: 'Dockerfile', name: 'Dockerfile'
 		            script{
 		              version = sh(returnStdout: true, script: "mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout")
  		            }
@@ -60,7 +59,7 @@ pipeline {
                 unstash 'Dockerfile'
                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             	sh """#!/busybox/sh
-            	executor -f ${pwd()}/Dockerfile -c ${pwd()} -d gcr.io/na-csa-msuarez/backend-location:${BUILD_NUMBER} -d gcr.io/na-csa-msuarez/backend-location:${version}-${commitHash} -d gcr.io/na-csa-msuarez/backend-location:latest
+            	executor -f ${pwd()}/Dockerfile -c git://github.com/buzz-microservices/backend-location.git -d gcr.io/na-csa-msuarez/backend-location:${BUILD_NUMBER} -d gcr.io/na-csa-msuarez/backend-location:${version}-${commitHash} -d gcr.io/na-csa-msuarez/backend-location:latest
                 """
                    }
               }
