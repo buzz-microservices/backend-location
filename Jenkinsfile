@@ -5,13 +5,14 @@ pipeline {
     skipDefaultCheckout true
   }
   stages {
-        stage('Build') {
-	 agent {
+        stages('Acquiring pod') {
+	        agent {
             kubernetes {
                 label 'maven'
                 yamlFile 'pod-templates/maven-pod.yaml'
                 }
             }	
+            stage('Maven build'){
             steps {
               container('maven') {
                 checkout scm
@@ -23,15 +24,10 @@ pipeline {
  		            }
 		            echo "App Version: ${version}"
               }
-	    }
-        }
-        stage('Test') { 
-         agent {
-            kubernetes {
-                label 'maven'
-                yamlFile 'pod-templates/maven-pod.yaml'
-                }
+	          }
             }
+        
+        stage('Test') { 
             steps {
               container('maven') {
                 checkout scm
@@ -47,6 +43,8 @@ pipeline {
                 }
             }
         }
+        }
+  
         stage('Build Docker Image') {
          agent {
             kubernetes {
