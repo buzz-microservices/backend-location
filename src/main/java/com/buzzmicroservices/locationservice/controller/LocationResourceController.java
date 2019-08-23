@@ -2,6 +2,7 @@ package com.buzzmicroservices.locationservice.controller;
 
 import java.time.Instant;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,12 +59,22 @@ public class LocationResourceController{
     private String testTimezoneId;
     @Value("${test.country}")
     private String testCountry;
+    @Autowired
+    BuildProperties buildProperties;
 
 
     Logger logger = LoggerFactory.getLogger(LocationResourceController.class);
 
 
-    //@RequestMapping("/{ip}")
+    @RequestMapping("/health")
+    @CrossOrigin
+    public HashMap<String,String> getHealth(HttpServletRequest request){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Status", "OK");
+        map.put("Version", buildProperties.getVersion());
+        return map;
+    }
+
     //public List<GeoLocation> getGeoLocation(@PathVariable("ip") String ip, HttpServletRequest request){
     @RequestMapping(method = RequestMethod.GET)
     @CrossOrigin
