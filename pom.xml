@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.buzz-microservices</groupId>
 	<artifactId>location</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>location</name>
 	<description>Location services</description>
