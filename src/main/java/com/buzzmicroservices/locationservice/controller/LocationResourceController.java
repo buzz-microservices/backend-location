@@ -70,7 +70,7 @@ public class LocationResourceController{
     @CrossOrigin
     public HashMap<String,String> getHealth(HttpServletRequest request){
         HashMap<String, String> map = new HashMap<>();
-        map.put("Status", "OK - we are live!");
+        map.put("Status", "OK");
         map.put("Version", buildProperties.getVersion());
         return map;
     }
